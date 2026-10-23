@@ -1461,7 +1461,7 @@ main {
   background: var(--primary-soft);
   border-radius: 18px;
   padding: 14px;
-  transform: rotate(1.5deg);
+  transform: none;
 }
 
 .detail-image img {
@@ -3511,9 +3511,14 @@ main {
 
 .detail-copy h1.detail-title--myanmar {
   font-family: "Noto Sans Myanmar", "DM Sans", sans-serif;
+  font-size: clamp(36px, 4.2vw, 48px);
   letter-spacing: 0;
-  line-height: 1.38;
+  line-height: 1.5;
   overflow-wrap: anywhere;
+}
+
+.detail-copy h1.detail-title--myanmar-long {
+  font-size: clamp(34px, 3.5vw, 42px);
 }
 
 @media (max-width: 600px) {
@@ -3526,8 +3531,17 @@ main {
     width: 100%;
   }
 
+  .detail-copy h1.detail-title--myanmar {
+    font-size: clamp(34px, 8.6vw, 40px);
+    line-height: 1.5;
+  }
+
+  .detail-copy h1.detail-title--myanmar-long {
+    font-size: clamp(29px, 7vw, 34px);
+    line-height: 1.55;
+  }
+
   .detail-actions .primary-button {
-    grid-column: 1 / -1;
     justify-content: center;
     min-height: 48px;
     min-width: 0;
@@ -3536,7 +3550,26 @@ main {
     width: 100%;
   }
 
-  .detail-actions .announcement-button {
+  .detail-actions--1 {
+    grid-template-columns: 48px;
+    justify-content: start;
+  }
+
+  .detail-actions--2 > .primary-button,
+  .detail-actions--2 > .announcement-button {
+    grid-column: 1;
+    min-height: 48px;
+    min-width: 0;
+    padding: 9px 12px;
+    text-align: center;
+    width: 100%;
+  }
+
+  .detail-actions--3 > .primary-button {
+    grid-column: 1 / -1;
+  }
+
+  .detail-actions--3 > .announcement-button {
     grid-column: 1;
     min-height: 48px;
     min-width: 0;
@@ -3553,8 +3586,7 @@ main {
     width: 48px;
   }
 
-  .detail-actions > .save-button:only-child {
-    grid-column: 1 / -1;
-    justify-self: start;
+  .detail-actions--1 .save-button {
+    grid-column: 1;
   }
 }

@@ -1371,6 +1371,13 @@ function ResourceDetail() {
   if (!resource) return <NotFound />
 
   const titleHasMyanmar = /[\u1000-\u109f]/.test(resource.title)
+  const titleIsLong = Array.from(resource.title).length > 24
+  const hasPrimaryAction = Boolean(
+    resource.ctaUrl &&
+      !(resource.type === "Event" && resource.eventStatus === "past"),
+  )
+  const detailActionCount =
+    Number(hasPrimaryAction) + Number(Boolean(resource.announcementUrl)) + 1
 
   const related = resources
     .filter(
@@ -1394,7 +1401,11 @@ function ResourceDetail() {
               {resource.category}
             </span>
             <h1
-              className={titleHasMyanmar ? "detail-title--myanmar" : undefined}
+              className={
+                titleHasMyanmar
+                  ? `detail-title--myanmar${titleIsLong ? " detail-title--myanmar-long" : ""}`
+                  : undefined
+              }
               lang={titleHasMyanmar ? "my" : "en"}
             >
               {resource.title}
@@ -1405,7 +1416,7 @@ function ResourceDetail() {
                 <span key={tag}>{tag}</span>
               ))}
             </div>
-            <div className="detail-actions">
+            <div className={`detail-actions detail-actions--${detailActionCount}`}>
               {resource.ctaUrl &&
                 !(
                   resource.type === "Event" && resource.eventStatus === "past"
