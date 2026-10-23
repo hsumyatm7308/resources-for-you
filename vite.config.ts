@@ -5,6 +5,7 @@ import fs from 'node:fs'
 import path from 'node:path'
 
 import siteConfiguration from './.figma/make/site.json'
+import { categories, collections, resources } from './src/app/data'
 
 
 // Vite config — https://vitejs.dev/config/
@@ -52,6 +53,7 @@ react(),
 type FigmaSiteConfiguration = {
   title?: string
   description?: string
+  siteUrl?: string
   language?: string
   robots?: {
     index?: boolean
@@ -90,6 +92,7 @@ function figmaSiteConfiguration(config: FigmaSiteConfiguration): Plugin {
 
   const title = config.title ?? "Figma Make App"
   const description = config.description ?? ''
+  const siteUrl = config.siteUrl?.replace(/\/+$/, '')
   // Imported HTML keeps its own favicon; new Makes default to the Make product icon.
   const favicon = config.icons?.icon ?? '/favicon.svg'
   const socialImage = config.openGraph?.image ?? ''
@@ -99,26 +102,53 @@ function figmaSiteConfiguration(config: FigmaSiteConfiguration): Plugin {
   const headEnd = config.customScripts?.headEnd ?? ''
   const bodyStart = config.customScripts?.bodyStart ?? ''
   const bodyEnd = config.customScripts?.bodyEnd ?? ''
-  const robotsTxt = config.robots?.index === false ? 'User-agent: *\nDisallow: /\n' : ''
+  const robotsTxt = config.robots?.index === false
+    ? 'User-agent: *\nDisallow: /\n'
+    : `User-agent: *\nAllow: /\n${siteUrl ? `Sitemap: ${siteUrl}/sitemap.xml\n` : ''}`
+  const publicPaths = [
+    '/',
+    '/explore',
+    ...categories.map(({ slug }) => `/explore/${slug}`),
+    ...resources.map(({ id }) => `/resource/${id}`),
+    ...collections.map(({ id }) => `/collections/${id}`),
+  ]
+  const sitemap = siteUrl
+    ? `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${publicPaths
+        .map((route) => `  <url><loc>${siteUrl}${route}</loc></url>`)
+        .join('\n')}\n</urlset>\n`
+    : ''
 
   return {
     name: 'figma-site-configuration',
     configureServer(server) {
       server.middlewares.use((req, res, next) => {
-        if (!robotsTxt || req.url?.split('?')[0] !== '/robots.txt') return next()
+        const pathname = req.url?.split('?')[0]
+        if (pathname === '/sitemap.xml' && sitemap) {
+          res.setHeader('Content-Type', 'application/xml; charset=utf-8')
+          res.end(sitemap)
+          return
+        }
+        if (!robotsTxt || pathname !== '/robots.txt') return next()
 
         res.setHeader('Content-Type', 'text/plain; charset=utf-8')
         res.end(robotsTxt)
       })
     },
     generateBundle() {
-      if (!robotsTxt) return
-
-      this.emitFile({
-        type: 'asset',
-        fileName: 'robots.txt',
-        source: robotsTxt,
-      })
+      if (robotsTxt) {
+        this.emitFile({
+          type: 'asset',
+          fileName: 'robots.txt',
+          source: robotsTxt,
+        })
+      }
+      if (sitemap) {
+        this.emitFile({
+          type: 'asset',
+          fileName: 'sitemap.xml',
+          source: sitemap,
+        })
+      }
     },
     transformIndexHtml: {
       order: 'pre',
@@ -142,10 +172,43 @@ function figmaSiteConfiguration(config: FigmaSiteConfiguration): Plugin {
           tags.push({ tag: 'link', attrs: { rel: 'icon', href: favicon }, injectTo: 'head' })
         }
         if (title) {
-          tags.push({ tag: 'meta', attrs: { property: 'og:title', content: title }, injectTo: 'head' })
+          tags.push(
+            { tag: 'meta', attrs: { property: 'og:title', content: title }, injectTo: 'head' },
+            { tag: 'meta', attrs: { name: 'twitter:title', content: title }, injectTo: 'head' },
+            { tag: 'meta', attrs: { property: 'og:site_name', content: title }, injectTo: 'head' },
+          )
         }
         if (description) {
-          tags.push({ tag: 'meta', attrs: { property: 'og:description', content: description }, injectTo: 'head' })
+          tags.push(
+            { tag: 'meta', attrs: { property: 'og:description', content: description }, injectTo: 'head' },
+            { tag: 'meta', attrs: { name: 'twitter:description', content: description }, injectTo: 'head' },
+          )
+        }
+        tags.push(
+          { tag: 'meta', attrs: { property: 'og:type', content: 'website' }, injectTo: 'head' },
+          { tag: 'meta', attrs: { name: 'twitter:card', content: 'summary' }, injectTo: 'head' },
+        )
+        if (siteUrl) {
+          tags.push(
+            { tag: 'link', attrs: { rel: 'canonical', href: `${siteUrl}/` }, injectTo: 'head' },
+            { tag: 'meta', attrs: { property: 'og:url', content: `${siteUrl}/` }, injectTo: 'head' },
+            {
+              tag: 'script',
+              attrs: { type: 'application/ld+json' },
+              children: JSON.stringify({
+                '@context': 'https://schema.org',
+                '@type': 'WebSite',
+                name: title,
+                url: `${siteUrl}/`,
+                potentialAction: {
+                  '@type': 'SearchAction',
+                  target: `${siteUrl}/explore?q={search_term_string}`,
+                  'query-input': 'required name=search_term_string',
+                },
+              }),
+              injectTo: 'head',
+            },
+          )
         }
         if (socialImage) {
           tags.push(

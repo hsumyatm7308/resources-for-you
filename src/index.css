@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=Space+Grotesk:wght@400;500;600;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=Noto+Sans+Myanmar:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap");
 @import "tailwindcss";
 
 :root {
@@ -3506,5 +3506,55 @@ main {
   *::after {
     scroll-behavior: auto !important;
     transition-duration: 0.01ms !important;
+  }
+}
+
+.detail-copy h1.detail-title--myanmar {
+  font-family: "Noto Sans Myanmar", "DM Sans", sans-serif;
+  letter-spacing: 0;
+  line-height: 1.38;
+  overflow-wrap: anywhere;
+}
+
+@media (max-width: 600px) {
+  .detail-actions {
+    align-items: stretch;
+    display: grid;
+    gap: 10px;
+    grid-template-columns: minmax(0, 1fr) 48px;
+    margin-top: 24px;
+    width: 100%;
+  }
+
+  .detail-actions .primary-button {
+    grid-column: 1 / -1;
+    justify-content: center;
+    min-height: 48px;
+    min-width: 0;
+    padding: 10px 14px;
+    white-space: normal;
+    width: 100%;
+  }
+
+  .detail-actions .announcement-button {
+    grid-column: 1;
+    min-height: 48px;
+    min-width: 0;
+    padding: 9px 12px;
+    text-align: center;
+    width: 100%;
+  }
+
+  .detail-actions .save-button {
+    align-self: stretch;
+    grid-column: 2;
+    height: 48px;
+    min-height: 48px;
+    width: 48px;
+  }
+
+  .detail-actions > .save-button:only-child {
+    grid-column: 1 / -1;
+    justify-self: start;
   }
 }

@@ -1,7 +1,10 @@
 {
-  "description": "Offers a curated, searchable collection of workshops, hackathons, books, and design resources to help users easily find learning and creative materials.",
+  "title": "Resources For You",
+  "description": "Discover upcoming tech events, practical workshops, books, coding guides, and design inspiration from Myanmar and beyond.",
+  "language": "en",
+  "siteUrl": "https://resources-for-you.vercel.app",
   "robots": {
-    "index": false
+    "index": true
   },
   "accessibility": {
     "addBypassLinks": false,

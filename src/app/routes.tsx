@@ -1307,12 +1307,71 @@ function EmptyState({
 function ResourceDetail() {
   const { resources } = useResources()
   const { resourceId } = useParams()
+  const resource = resources.find((item) => item.id === resourceId)
+
+  useEffect(() => {
+    if (!resource) return
+
+    const oldTitle = document.title
+    const description = document.querySelector<HTMLMetaElement>(
+      'meta[name="description"]',
+    )
+    const oldDescription = description?.content
+    const metadata = [
+      ['property', 'og:title', `${resource.title} | Resources For You`],
+      ['property', 'og:description', resource.description],
+      ['name', 'twitter:title', `${resource.title} | Resources For You`],
+      ['name', 'twitter:description', resource.description],
+    ] as const
+    const originalMetadata = metadata.map(([attribute, key]) => {
+      const element = document.querySelector<HTMLMetaElement>(
+        `meta[${attribute}="${key}"]`,
+      )
+      return { element, content: element?.content }
+    })
+    const canonical = document.querySelector<HTMLLinkElement>(
+      'link[rel="canonical"]',
+    )
+    const oldCanonical = canonical?.href
+    const ogUrl = document.querySelector<HTMLMetaElement>(
+      'meta[property="og:url"]',
+    )
+    const oldOgUrl = ogUrl?.content
+    const pageTitle = `${resource.title} | Resources For You`
+    const pageUrl = new URL(
+      `/resource/${resource.id}`,
+      oldCanonical || window.location.origin,
+    )
+
+    document.title = pageTitle
+    if (description) description.content = resource.description
+    metadata.forEach(([attribute, key, content]) => {
+      const element = document.querySelector<HTMLMetaElement>(
+        `meta[${attribute}="${key}"]`,
+      )
+      if (element) element.content = content
+    })
+    if (canonical) canonical.href = pageUrl.href
+    if (ogUrl) ogUrl.content = pageUrl.href
+
+    return () => {
+      document.title = oldTitle
+      if (description && oldDescription) description.content = oldDescription
+      originalMetadata.forEach(({ element, content }) => {
+        if (element && content !== undefined) element.content = content
+      })
+      if (canonical && oldCanonical) canonical.href = oldCanonical
+      if (ogUrl && oldOgUrl) ogUrl.content = oldOgUrl
+    }
+  }, [resource])
+
   if (resourceId === "typescript-deep-dive") {
     return <Navigate to="/resource/rockstar-developer-2025" replace />
   }
-
-  const resource = resources.find((item) => item.id === resourceId)
   if (!resource) return <NotFound />
+
+  const titleHasMyanmar = /[\u1000-\u109f]/.test(resource.title)
+
   const related = resources
     .filter(
       (item) => item.category === resource.category && item.id !== resource.id,
@@ -1334,7 +1393,12 @@ function ResourceDetail() {
             <span className={`category-badge tone-${resource.color}`}>
               {resource.category}
             </span>
-            <h1>{resource.title}</h1>
+            <h1
+              className={titleHasMyanmar ? "detail-title--myanmar" : undefined}
+              lang={titleHasMyanmar ? "my" : "en"}
+            >
+              {resource.title}
+            </h1>
             <p>{resource.description}</p>
             <div className="tag-row">
               {resource.tags.map((tag) => (
