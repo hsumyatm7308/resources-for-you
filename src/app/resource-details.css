@@ -108,6 +108,27 @@
   color: var(--primary);
 }
 
+.announcement-button {
+  align-items: center;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  color: var(--ink);
+  display: inline-flex;
+  font-size: 12px;
+  font-weight: 700;
+  gap: 8px;
+  justify-content: center;
+  min-height: 47px;
+  padding: 0 16px;
+  text-decoration: none;
+}
+
+.announcement-button:hover {
+  border-color: var(--primary);
+  color: var(--primary);
+}
+
 @media (max-width: 560px) {
   .detail-image.poster-detail-image {
     padding: 8px;

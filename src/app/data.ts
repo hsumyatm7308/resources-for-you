@@ -26,6 +26,7 @@ export type Resource = {
   }
   ctaUrl?: string
   ctaLabel?: string
+  announcementUrl?: string
   imageAlt?: string
   imageFit?: "cover" | "contain"
   details?: {
@@ -178,9 +179,8 @@ export const resources: Resource[] = [
     format: "In-person · 9am–4pm",
     location: "Technortal Campus, Times City, Yangon",
     dateTile: { primary: "MAY", secondary: "25–31 · 2026" },
-    ctaUrl:
+    announcementUrl:
       "https://www.facebook.com/technortal/posts/pfbid02HgpASfmVFLvGiJoA2xc7dQ5DY22Z2JpacKP7UiT97Fut466HS3ctJrM9AT8uT4fyl",
-    ctaLabel: "View event announcement",
     details: {
       heading: "Build a working project with a real team and deadline",
       paragraphs: [
@@ -281,7 +281,7 @@ export const resources: Resource[] = [
     category: "Workshops & Webinars",
     type: "Event",
     source: "VarCamp · VibeCode.Tours",
-    meta: "Past event · October 17, 2026 · 7:30–8:30 AM",
+    meta: "Past event · October 17, 2026 · 9–10 PM",
     cost: "Free",
     added: "October 23, 2026",
     image: photos.workshop,
@@ -296,20 +296,24 @@ export const resources: Resource[] = [
     ],
     opportunity: true,
     eventStatus: "past",
-    format: "Online · Google Meet",
+    format: "Online · Google Meet · 9–10 PM",
     location: "Online · Google Meet",
     dateTile: { primary: "OCT", secondary: "17 · 2026" },
-    ctaUrl: "https://workadventu.re/",
-    ctaLabel: "Explore WorkAdventure",
+    ctaUrl: "https://calendar.app.google/6EtfdVuA9f35vg6z7",
+    ctaLabel: "Session details and requirements",
     details: {
       heading: "Design a virtual event map with WorkAdventure",
       paragraphs: [
         "ဒီအခမဲ့ online session မှာ WorkAdventure virtual map ပေါ်မှာ VarCamp ကို ဖန်တီးခဲ့တဲ့ အတွေ့အကြုံကို မျှဝေပြီး event အတွက် map နဲ့ room ပုံစံတွေ စီစဉ်နည်းကို လေ့လာနိုင်ပါတယ်။ ဒီနှစ်ကစပြီး VarCamp အတွက် map ကို team က တာဝန်ယူရေးဆွဲသွားမှာဖြစ်ပြီး အလားတူ event တွေ စီစဉ်သူတွေအတွက်လည်း အထောက်အကူဖြစ်စေဖို့ ရည်ရွယ်ထားပါတယ်။",
-        "အဓိကအားဖြင့် Tiled နဲ့ map ဆွဲနည်း၊ game assets အသုံးပြုနည်း၊ WorkAdventure rooms, admins, links နဲ့ Web Editor အကြောင်းတွေ ပါဝင်ပါတယ်။ Google Meet session ကို ၂၀၂၆ အောက်တိုဘာ ၁၇ ရက်၊ စနေနေ့ မနက် ၇:၃၀ မှ ၈:၃၀ အထိ Calendar မှာ စီစဉ်ထားပြီး ကြေညာချက်စာသားမှာ တစ်နာရီ tutorial နဲ့ မိနစ် ၃၀ Q&A ပါမယ်လို့ ဖော်ပြထားပါတယ်။",
+        "အဓိကအားဖြင့် Tiled နဲ့ map ဆွဲနည်း၊ game assets အသုံးပြုနည်း၊ WorkAdventure rooms, admins, links နဲ့ Web Editor အကြောင်းတွေ ပါဝင်ပါတယ်။ ကြေညာချက်မှာ တစ်နာရီ tutorial နဲ့ မိနစ် ၃၀ Q&A ပါမယ်လို့ ဖော်ပြထားပြီး Google Calendar invitation မှာ ၂၀၂၆ အောက်တိုဘာ ၁၇ ရက် ည ၉ နာရီမှ ၁၀ နာရီအထိ တွေ့ဆုံချိန်ကို ဖော်ပြထားပါတယ်။",
         "ကြိုတင်ပြင်ဆင်ရန် WorkAdventure account ဖွင့်ထားပြီး WA Starter Maps, Tiled Map Editor နဲ့ Node.js/npm သို့မဟုတ် NVM ကို အသင့်ပြင်ထားရန် အကြံပြုထားပါတယ်။ Session ပြီးနောက် ကိုယ်တိုင်ဆွဲထားတဲ့ map တွေ review လုပ်ဖို့ ၁၅ မိနစ် သို့မဟုတ် မိနစ် ၃၀ booking လုပ်နိုင်ပါတယ်။",
       ],
     },
     links: [
+      {
+        label: "Session registration and requirements · Google Calendar",
+        url: "https://calendar.app.google/6EtfdVuA9f35vg6z7",
+      },
       { label: "VarCamp", url: "https://var.camp/" },
       { label: "VibeCode.Tours", url: "https://vibecode.tours/" },
       { label: "WorkAdventure", url: "https://workadventu.re/" },
@@ -501,6 +505,7 @@ export const resources: Resource[] = [
     dateTile: { primary: "OCT", secondary: "25 · 2026" },
     ctaUrl: "https://forms.gle/Kw6bvNiRWurYWy1w9",
     ctaLabel: "Register for webinar",
+    announcementUrl: "https://www.facebook.com/share/p/19igr1X2d6/",
     speaker: {
       name: "Dr. Wai Yan (William)",
       role: "Senior Forward Deployed Engineer · Bosch USA",
@@ -531,6 +536,39 @@ export const resources: Resource[] = [
     ],
   },
   {
+    id: "contentcreationprofession",
+    title: "Content Creation Profession တစ်ခု တည်ဆောက်ချင်သူတွေအတွက်",
+    description:
+      "A free Zoom webinar by The Forward Society, with MYEO as media partner, on building a content creation career, personal branding, choosing platforms, and connecting with an audience.",
+    category: "Workshops & Webinars",
+    type: "Event",
+    source: "The Forward Society · MYEO",
+    meta: "October 25, 2026 · 7–9 PM",
+    cost: "Free",
+    added: "October 23, 2026",
+    image:
+      "https://scontent-sjc6-1.xx.fbcdn.net/v/t39.99422-6/859676386_1112944564819940_552831754820403941_n.png?stp=dst-jpg_tt6&cstp=mx2048x2048&ctp=s2048x2048&_nc_cat=108&ccb=1-7&_nc_sid=127cfc&_nc_ohc=mHQadYaWGsoQ7kNvwG2Wzea&_nc_oc=Adp8lk1rtcmBuZeP8Sh4Q6yYUf2h7fwMjVQ5Rh4mu19iIjg9SGFjoi5JKzWZZuN8GDVXFOsIdMWCTBLJ6auOUdbL&_nc_zt=14&_nc_ht=scontent-sjc6-1.xx&_nc_gid=AdcPo5qDbugZjGrixwXW6w&_nc_ss=7b2a8&oh=00_AQN-UF3IIq8nAVD-FPnxEyNJp6q1_bGN2cV7gdrM0BYgbw&oe=6AE0F24E",
+    imageAlt: "The Creative Chords content creation webinar",
+    color: "blue",
+    tags: ["Content creation", "Personal brand", "Career", "Webinar"],
+    opportunity: true,
+    eventStatus: "upcoming",
+    format: "Online · Zoom · 7–9 PM",
+    location: "Zoom (Live Session)",
+    dateTile: { primary: "OCT", secondary: "25 · 2026" },
+    ctaUrl: "https://ln.run/OhRw7",
+    ctaLabel: "Register for webinar",
+    announcementUrl: "https://www.facebook.com/share/p/1H8kvLSbFM/",
+    details: {
+      heading: "Start building a content creation career",
+      paragraphs: [
+        "MYEO က The Forward Society နဲ့အတူ Media Partner အဖြစ် ပါဝင်ထားတဲ့ webinar ဖြစ်ပါတယ်။ Content Creator ဖြစ်ဖို့ ကင်မရာကောင်းကောင်းလိုသလား၊ Content Creation ကို ဘယ်ကစရမလဲဆိုတဲ့ မေးခွန်းတွေကို The Creative Chords မှာ ဆွေးနွေးဖို့ ဖိတ်ခေါ်ထားပါတယ်။",
+        "Personal Brand တည်ဆောက်ခြင်းနဲ့ career direction ရှာဖွေခြင်း၊ ကိုယ်နဲ့ကိုက်ညီတဲ့ platform ရွေးချယ်ပြီး audience နဲ့ ချိတ်ဆက်ခြင်း၊ speaker နဲ့ တိုက်ရိုက်မေးမြန်းနိုင်တဲ့ Q&A တို့ ပါဝင်ပါတယ်။",
+        "ကြေညာချက်အရ session ကို ၂၀၂၆ အောက်တိုဘာ ၂၅ ရက်၊ တနင်္ဂနွေနေ့ ည ၇ နာရီမှ ၉ နာရီအထိ Zoom မှာ ပြုလုပ်မှာဖြစ်ပါတယ်။",
+      ],
+    },
+  },
+  {
     id: "app-industry-talk-2026",
     title: "App Industry Talk 2026",
     description:
@@ -557,8 +595,7 @@ export const resources: Resource[] = [
     format: "In-person · 12–4 PM",
     location: "Acumen International College Campus, Times City",
     dateTile: { primary: "AUG", secondary: "30 · 2026" },
-    ctaUrl: "https://www.facebook.com/share/p/1DWViBpdJA/",
-    ctaLabel: "View event announcement",
+    announcementUrl: "https://www.facebook.com/share/p/1DWViBpdJA/",
     speakers: [
       {
         name: "Ma Wai Yi Mon Soe",
@@ -605,8 +642,7 @@ export const resources: Resource[] = [
     format: "In-person · 10:20–11:20 AM",
     location: "UAB Tower @ Times City",
     dateTile: { primary: "AUG", secondary: "23 · 2026" },
-    ctaUrl: "https://www.facebook.com/share/p/1BrRzrrtBe/",
-    ctaLabel: "View event announcement",
+    announcementUrl: "https://www.facebook.com/share/p/1BrRzrrtBe/",
     speaker: {
       name: "Ko Bo Bo Min",
       role: "Founder, Technortal and Empire Digital Solution · General Manager",
@@ -646,9 +682,8 @@ export const resources: Resource[] = [
     format: "Online · Zoom · 7–9 PM",
     location: "Zoom",
     dateTile: { primary: "AUG", secondary: "17 · 2026" },
-    ctaUrl:
-      "https://www.findglocal.com/MM/Yangon/369107489814175/MyJobs-Myanmar",
-    ctaLabel: "View MyJobs announcement archive",
+    announcementUrl:
+      "https://myjobs.com.mm/events/01KYVTSKJ1FXERWKNMPQ5QXD00",
     speaker: {
       name: "Ei Maung",
       role: "Co-founder, Fairway Technology · Author on AI tools and workflow automation",
@@ -667,12 +702,6 @@ export const resources: Resource[] = [
         "အခမ်းအနားကို ၂၀၂၆ ဩဂုတ် ၁၇ ရက်၊ တနင်္လာနေ့ ည ၇ နာရီမှ ၉ နာရီအထိ Zoom မှတစ်ဆင့် ပြုလုပ်ခဲ့ကြောင်း MyJobs Myanmar ၏ ကြေညာချက်တွင် ဖော်ပြထားပါတယ်။",
       ],
     },
-    links: [
-      {
-        label: "Original MyJobs event page",
-        url: "https://myjobs.com.mm/events/01KYVTSKJ1FXERWKNMPQ5QXD00",
-      },
-    ],
   },
 ]
 
@@ -702,6 +731,7 @@ export const collections: Collection[] = [
       "smart-event-graphics-ai-workshop",
       "workadventure-tiled-map-workshop",
       "fde-career-webinar",
+      "contentcreationprofession",
       "app-industry-talk-2026",
       "burmax-journey-entrepreneurship",
       "embracing-ai-career-talk",

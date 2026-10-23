@@ -21,17 +21,93 @@ import {
   useParams,
   useSearchParams,
 } from "react-router"
-import {
-  categories,
-  categoryBySlug,
-  collections,
-  type Resource,
-  resources,
-} from "./data"
+import { categories, categoryBySlug, collections, type Resource } from "./data"
 import { useFilterSheet } from "./useFilterSheet"
 import { useProgressiveResults } from "./useProgressiveResults"
+import { useResources } from "./resourceStore"
 
 type IconName = "arrow" | "bookmark" | "book" | "check" | "chevron" | "code" | "external" | "filter" | "layers" | "menu" | "search" | "spark" | "user" | "video" | "x"
+
+const monthNumbers: Record<string, number> = {
+  jan: 0,
+  january: 0,
+  feb: 1,
+  february: 1,
+  mar: 2,
+  march: 2,
+  apr: 3,
+  april: 3,
+  may: 4,
+  jun: 5,
+  june: 5,
+  jul: 6,
+  july: 6,
+  aug: 7,
+  august: 7,
+  sep: 8,
+  sept: 8,
+  september: 8,
+  oct: 9,
+  october: 9,
+  nov: 10,
+  november: 10,
+  dec: 11,
+  december: 11,
+}
+
+function eventDate(resource: Resource) {
+  if (resource.type !== "Event") return null
+
+  const dateText = [
+    resource.dateTile?.primary,
+    resource.dateTile?.secondary,
+    resource.meta,
+  ]
+    .filter(Boolean)
+    .join(" ")
+  const monthPattern =
+    "January|February|March|April|May|June|July|August|September|October|November|December|Jan|Feb|Mar|Apr|Jun|Jul|Aug|Sep|Sept|Oct|Nov|Dec"
+  const fullDate = dateText.match(
+    new RegExp(`\\b(${monthPattern})\\s+(\\d{1,2})(?:\\s*[–—-]\\s*\\d{1,2})?[,\\s·]+(20\\d{2})\\b`, "i"),
+  )
+  const monthAndYear = dateText.match(
+    new RegExp(`\\b(${monthPattern})\\s+(20\\d{2})\\b`, "i"),
+  )
+
+  if (fullDate) {
+    const month = monthNumbers[fullDate[1].toLowerCase()]
+    return new Date(Number(fullDate[3]), month, Number(fullDate[2])).getTime()
+  }
+  if (monthAndYear) {
+    const month = monthNumbers[monthAndYear[1].toLowerCase()]
+    return new Date(Number(monthAndYear[2]), month, 1).getTime()
+  }
+  return null
+}
+
+function prioritizeUpcomingEvents(matches: Resource[]) {
+  const today = new Date()
+  today.setHours(0, 0, 0, 0)
+  const todayTime = today.getTime()
+
+  return matches
+    .map((resource, index) => {
+      const date = eventDate(resource)
+      const rank =
+        date !== null && date >= todayTime
+          ? 0
+          : date === null && resource.type === "Event" && resource.eventStatus === "upcoming"
+            ? 1
+            : 2
+      return { resource, index, date, rank }
+    })
+    .sort((a, b) => {
+      if (a.rank !== b.rank) return a.rank - b.rank
+      if (a.rank === 0 && a.date !== b.date) return (a.date ?? 0) - (b.date ?? 0)
+      return a.index - b.index
+    })
+    .map(({ resource }) => resource)
+}
 
 function Icon({ name, size = 20 }: { name: IconName; size?: number }) {
   const paths: Record<IconName, ReactNode> = {
@@ -143,7 +219,6 @@ const SavedContext = createContext<SavedContextType>({
   toggleSaved: () => undefined,
 })
 
-const validResourceIds = new Set(resources.map((resource) => resource.id))
 const savedResourceIdAliases: Record<string, string> = {
   "typescript-deep-dive": "rockstar-developer-2025",
   "beautiful-portfolios": "godly-web-design-inspiration",
@@ -162,10 +237,7 @@ export function SavedProvider({ children }: { children: ReactNode }) {
       const migratedIds = stored
         .filter((id): id is string => typeof id === "string")
         .map((id) => savedResourceIdAliases[id] || id)
-        .filter((id) => validResourceIds.has(id))
-      return [
-        ...new Set(migratedIds),
-      ]
+      return [...new Set(migratedIds)]
     } catch {
       return []
     }
@@ -192,7 +264,7 @@ function useSaved() {
   return useContext(SavedContext)
 }
 
-function getSavedResources(savedIds: string[]) {
+function getSavedResources(savedIds: string[], resources: Resource[]) {
   return resources.filter((resource) => savedIds.includes(resource.id))
 }
 
@@ -201,7 +273,8 @@ function Layout() {
   const [activeSection, setActiveSection] = useState<string | null>(null)
   const location = useLocation()
   const { saved } = useSaved()
-  const savedResourceCount = getSavedResources(saved).length
+  const { resources } = useResources()
+  const savedResourceCount = getSavedResources(saved, resources).length
 
   useEffect(() => {
     if (!menuOpen) return
@@ -304,9 +377,9 @@ function Layout() {
             <span>Saved</span>
             {savedResourceCount > 0 && <b>{savedResourceCount}</b>}
           </Link>
-          <button className="avatar-button" aria-label="Profile">
+          <Link className="avatar-button" to="/admin" aria-label="Admin panel">
             <Icon name="user" size={18} />
-          </button>
+          </Link>
         </div>
       </header>
       <main>
@@ -409,6 +482,7 @@ function SearchForm({
   const [isFocused, setIsFocused] = useState(false)
   const [activeSuggestion, setActiveSuggestion] = useState(-1)
   const navigate = useNavigate()
+  const { resources } = useResources()
   const suggestionListId = useId()
 
   useEffect(() => setQuery(initial), [initial])
@@ -417,8 +491,8 @@ function SearchForm({
     const normalized = query.trim().toLowerCase()
     if (compact || normalized.length < 2) return []
 
-    return resources
-      .filter((resource) =>
+    return prioritizeUpcomingEvents(
+      resources.filter((resource) =>
         [
           resource.title,
           resource.description,
@@ -429,9 +503,9 @@ function SearchForm({
           .join(" ")
           .toLowerCase()
           .includes(normalized),
-      )
-      .slice(0, 5)
-  }, [compact, query])
+      ),
+    ).slice(0, 5)
+  }, [compact, query, resources])
 
   const showSuggestions = !compact && isFocused && query.trim().length >= 2
 
@@ -649,7 +723,9 @@ function ResourceCard({
 
 function Home() {
   const navigate = useNavigate()
-  const featuredResource = resources[0]
+  const { resources } = useResources()
+  const featuredResource =
+    resources.find((resource) => resource.featured) || resources[0]
   const opportunities = resources
     .filter(
       (resource) => resource.opportunity && resource.eventStatus !== "past",
@@ -701,10 +777,13 @@ function Home() {
               <span />
               <span />
             </div>
-            <img src={featuredResource.image} alt="" />
+            <img src={featuredResource?.image || "/favicon.svg"} alt="" />
             <div className="visual-card">
-              <span>Program spotlight · Batch 2</span>
-              <strong>Build a Mini App with AppCube.</strong>
+              <span>{featuredResource?.category || "Explore the library"}</span>
+              <strong>
+                {featuredResource?.title ||
+                  "Find your next source of inspiration."}
+              </strong>
             </div>
           </div>
           <div className="floating-chip chip-one">2.5-month program</div>
@@ -737,7 +816,14 @@ function Home() {
                 <p>{category.description}</p>
               </div>
               <footer>
-                <span>{category.count} resources</span>
+                <span>
+                  {
+                    resources.filter(
+                      (resource) => resource.category === category.name,
+                    ).length
+                  }{" "}
+                  resources
+                </span>
                 <span className="card-arrow">
                   <Icon name="arrow" size={17} />
                 </span>
@@ -891,6 +977,7 @@ function Home() {
 }
 
 function Explore() {
+  const { resources } = useResources()
   const { categorySlug } = useParams()
   const pathCategory = categoryBySlug(categorySlug)
   const [params, setParams] = useSearchParams()
@@ -957,7 +1044,7 @@ function Explore() {
           Number(b.opportunity && b.eventStatus !== "past") -
           Number(a.opportunity && a.eventStatus !== "past"),
       )
-    return filtered
+    return query ? prioritizeUpcomingEvents(filtered) : filtered
   }, [query, selectedCategories.join(","), type, cost, sort])
 
   const {
@@ -1218,6 +1305,7 @@ function EmptyState({
 }
 
 function ResourceDetail() {
+  const { resources } = useResources()
   const { resourceId } = useParams()
   if (resourceId === "typescript-deep-dive") {
     return <Navigate to="/resource/rockstar-developer-2025" replace />
@@ -1254,16 +1342,30 @@ function ResourceDetail() {
               ))}
             </div>
             <div className="detail-actions">
-              {resource.ctaUrl && (
+              {resource.ctaUrl &&
+                !(
+                  resource.type === "Event" && resource.eventStatus === "past"
+                ) && (
+                  <a
+                    className="primary-button"
+                    href={resource.ctaUrl}
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    {resource.ctaLabel ||
+                      (resource.type === "Event" ? "Register now" : "Apply")}
+                    <Icon name="external" size={17} />
+                  </a>
+                )}
+              {resource.announcementUrl && (
                 <a
-                  className="primary-button"
-                  href={resource.ctaUrl}
+                  className="announcement-button"
+                  href={resource.announcementUrl}
                   target="_blank"
                   rel="noreferrer"
                 >
-                  {resource.ctaLabel ||
-                    (resource.type === "Event" ? "Register now" : "Apply")}
-                  <Icon name="external" size={17} />
+                  View event announcement
+                  <Icon name="external" size={16} />
                 </a>
               )}
               <SaveButton id={resource.id} />
@@ -1418,6 +1520,7 @@ function ResourceDetail() {
 }
 
 function CollectionDetail() {
+  const { resources } = useResources()
   const { collectionId } = useParams()
   const collection = collections.find((item) => item.id === collectionId)
   if (!collection) return <NotFound />
@@ -1462,10 +1565,11 @@ function CollectionDetail() {
 
 function SavedPage() {
   const { saved } = useSaved()
+  const { resources } = useResources()
   const [query, setQuery] = useState("")
   const [category, setCategory] = useState("")
-  const allSavedResources = getSavedResources(saved)
-  const savedResources = allSavedResources.filter(
+  const allSavedResources = getSavedResources(saved, resources)
+  const filteredSavedResources = allSavedResources.filter(
     (resource) =>
       (!query ||
         `${resource.title} ${resource.description}`
@@ -1473,6 +1577,9 @@ function SavedPage() {
           .includes(query.toLowerCase())) &&
       (!category || resource.category === category),
   )
+  const savedResources = query
+    ? prioritizeUpcomingEvents(filteredSavedResources)
+    : filteredSavedResources
 
   return (
     <>
@@ -1570,6 +1677,10 @@ function NotFound() {
 }
 
 export const router = createBrowserRouter([
+  {
+    path: "/admin",
+    lazy: async () => ({ Component: (await import("./AdminPage")).default }),
+  },
   {
     path: "/",
     Component: Layout,
