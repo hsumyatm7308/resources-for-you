@@ -13,7 +13,7 @@ import {
   type PublishStatus,
 } from "./adminApi"
 import { adminEmail, authClient } from "./auth"
-import { categories, type Resource } from "./data"
+import { categories, getResourceImageSource, type Resource } from "./data"
 import { useResources } from "./resourceStore"
 import "./admin.css"
 
@@ -642,7 +642,7 @@ export default function AdminPage() {
                   >
                     <img
                       className="admin-resource-image"
-                      src={record.resource.image}
+                      src={getResourceImageSource(record.resource.image)}
                       alt=""
                     />
                     <div className="admin-resource-copy">
@@ -909,7 +909,7 @@ export default function AdminPage() {
                   label="Image URL"
                   wide
                   required
-                  hint="Use a direct image URL or /resources/... . A Google Drive preview link is not a direct image."
+                  hint="Google Drive file share links work when set to Anyone with the link."
                 >
                   <input
                     value={form.resource.image}

@@ -58,6 +58,22 @@ export const photos = {
     "https://images.unsplash.com/photo-1719159381981-1327b22aff9b?auto=format&fit=crop&w=1200&q=82",
 }
 
+export function getResourceImageSource(source: string) {
+  try {
+    const url = new URL(source)
+    if (url.hostname !== "drive.google.com") return source
+
+    const fileId =
+      url.pathname.match(/^\/file\/d\/([^/]+)/)?.[1] ||
+      url.searchParams.get("id")
+    if (!fileId) return source
+
+    return `https://drive.google.com/thumbnail?id=${encodeURIComponent(fileId)}&sz=w1600`
+  } catch {
+    return source
+  }
+}
+
 const categoryDefinitions: {
   name: Category
   slug: string

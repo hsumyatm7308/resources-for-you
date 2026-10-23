@@ -21,7 +21,13 @@ import {
   useParams,
   useSearchParams,
 } from "react-router"
-import { categories, categoryBySlug, collections, type Resource } from "./data"
+import {
+  categories,
+  categoryBySlug,
+  collections,
+  getResourceImageSource,
+  type Resource,
+} from "./data"
 import { useFilterSheet } from "./useFilterSheet"
 import { useProgressiveResults } from "./useProgressiveResults"
 import { useResources } from "./resourceStore"
@@ -685,7 +691,7 @@ function ResourceCard({
   return (
     <article className={`resource-card ${layout === "row" ? "row-card" : ""}`}>
       <Link className="resource-image" to={`/resource/${resource.id}`}>
-        <img src={resource.image} alt="" />
+        <img src={getResourceImageSource(resource.image)} alt="" />
         <span className={`category-badge tone-${resource.color}`}>
           {resource.category}
         </span>
@@ -777,7 +783,12 @@ function Home() {
               <span />
               <span />
             </div>
-            <img src={featuredResource?.image || "/favicon.svg"} alt="" />
+            <img
+              src={getResourceImageSource(
+                featuredResource?.image || "/favicon.svg",
+              )}
+              alt=""
+            />
             <div className="visual-card">
               <span>{featuredResource?.category || "Explore the library"}</span>
               <strong>
@@ -917,7 +928,11 @@ function Home() {
                   return (
                     <img
                       key={id}
-                      src={resource?.image}
+                      src={
+                        resource?.image
+                          ? getResourceImageSource(resource.image)
+                          : undefined
+                      }
                       alt=""
                       className={`cover-${imageIndex + 1}`}
                     />
@@ -1453,7 +1468,7 @@ function ResourceDetail() {
           >
             <img
               className={resource.imageFit === "contain" ? "poster-image" : ""}
-              src={resource.image}
+              src={getResourceImageSource(resource.image)}
               alt={resource.imageAlt || ""}
             />
           </div>
@@ -1616,7 +1631,7 @@ function CollectionDetail() {
           {items.slice(0, 3).map((item, index) => (
             <img
               key={item.id}
-              src={item.image}
+              src={getResourceImageSource(item.image)}
               alt=""
               className={`stack-${index + 1}`}
             />
