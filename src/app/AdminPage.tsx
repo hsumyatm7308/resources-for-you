@@ -905,7 +905,12 @@ export default function AdminPage() {
                     required
                   />
                 </Field>
-                <Field label="Image URL" wide required>
+                <Field
+                  label="Image URL"
+                  wide
+                  required
+                  hint="Use a direct image URL or /resources/... . A Google Drive preview link is not a direct image."
+                >
                   <input
                     value={form.resource.image}
                     onChange={(event) =>
@@ -946,8 +951,9 @@ export default function AdminPage() {
                   <span className="admin-eyebrow">Links</span>
                   <h3>Choose the next action</h3>
                   <p>
-                    Application and announcement links stay in consistent places
-                    on the public page.
+                    HTTPS links, including Google Drive share links, work for
+                    applications, announcements, and extra links. These buttons
+                    stay in consistent places on the public page.
                   </p>
                 </div>
                 <div className="admin-form-grid">
@@ -1268,11 +1274,13 @@ function Field({
   label,
   required = false,
   wide = false,
+  hint,
   children,
 }: {
   label: string
   required?: boolean
   wide?: boolean
+  hint?: string
   children: ReactNode
 }) {
   return (
@@ -1282,6 +1290,7 @@ function Field({
         {required && <i> · required</i>}
       </span>
       {children}
+      {hint && <small className="admin-field-hint">{hint}</small>}
     </label>
   )
 }
