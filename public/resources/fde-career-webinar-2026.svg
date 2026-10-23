@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 560" role="img" aria-labelledby="title description">
+  <title id="title">Forward Deployed Engineer Career Webinar</title>
+  <desc id="description">Dr. Wai Yan, Bosch USA, October 25, 2026, online</desc>
+  <defs>
+    <linearGradient id="background" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#0b2235" />
+      <stop offset="1" stop-color="#123b58" />
+    </linearGradient>
+    <pattern id="grid" width="36" height="36" patternUnits="userSpaceOnUse">
+      <path d="M36 0H0V36" fill="none" stroke="#9ee7d2" stroke-opacity=".12" />
+    </pattern>
+  </defs>
+  <rect width="900" height="560" fill="url(#background)" />
+  <rect width="900" height="560" fill="url(#grid)" />
+  <circle cx="745" cy="160" r="150" fill="#2dd4bf" fill-opacity=".1" />
+  <circle cx="745" cy="160" r="104" fill="none" stroke="#99f6e4" stroke-opacity=".45" />
+  <circle cx="745" cy="160" r="58" fill="none" stroke="#99f6e4" stroke-opacity=".3" />
+  <path d="M640 160h210M745 55v210" stroke="#99f6e4" stroke-opacity=".3" />
+  <rect x="52" y="54" width="178" height="34" rx="17" fill="#99f6e4" fill-opacity=".12" stroke="#99f6e4" stroke-opacity=".45" />
+  <text x="141" y="76" fill="#ccfbf1" font-family="Arial, sans-serif" font-size="13" font-weight="700" letter-spacing="1.5" text-anchor="middle">AI CAREER WEBINAR</text>
+  <text x="54" y="173" fill="#99f6e4" font-family="Arial, sans-serif" font-size="20" font-weight="700" letter-spacing="3">FROM RESEARCH TO INDUSTRY</text>
+  <text x="50" y="253" fill="#fff" font-family="Arial, sans-serif" font-size="70" font-weight="800" letter-spacing="-3">FORWARD</text>
+  <text x="50" y="330" fill="#fff" font-family="Arial, sans-serif" font-size="70" font-weight="800" letter-spacing="-3">DEPLOYED</text>
+  <text x="54" y="378" fill="#99f6e4" font-family="Arial, sans-serif" font-size="24" font-weight="700" letter-spacing="4">ENGINEERING</text>
+  <text x="56" y="430" fill="#d1e5ee" font-family="Arial, sans-serif" font-size="17">Dr. Wai Yan (William) · Bosch USA</text>
+  <path d="M56 470h788" stroke="#fff" stroke-opacity=".2" />
+  <text x="56" y="510" fill="#fff" font-family="Arial, sans-serif" font-size="18" font-weight="700">OCT 25 · 2026</text>
+  <text x="844" y="510" fill="#d1e5ee" font-family="Arial, sans-serif" font-size="16" text-anchor="end">ONLINE · 7—8 PM MYANMAR TIME</text>
+</svg>

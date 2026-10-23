@@ -1,0 +1,119 @@
+.detail-image.poster-detail-image {
+  background: #0860ad;
+  border: 1px solid #bfcac6;
+  border-radius: 0;
+  padding: 12px;
+  transform: none;
+}
+
+.detail-image.poster-detail-image .poster-image {
+  background: #0860ad;
+  border-radius: 0;
+  height: auto;
+  max-height: 620px;
+  object-fit: contain;
+  width: 100%;
+}
+
+.resource-prizes,
+.resource-links,
+.resource-speaker,
+.resource-topics {
+  margin-top: 28px;
+}
+
+.resource-speaker strong {
+  color: var(--ink);
+  display: block;
+  font-size: 16px;
+  margin-top: 10px;
+}
+
+.resource-speaker p {
+  margin-top: 4px;
+}
+
+.resource-topics ul {
+  border-top: 1px solid var(--line);
+  list-style: none;
+  margin: 10px 0 0;
+  padding: 0;
+}
+
+.resource-topics li {
+  border-bottom: 1px solid var(--line);
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.6;
+  padding: 10px 0;
+}
+
+.resource-prizes ul {
+  border-top: 1px solid var(--line);
+  list-style: none;
+  margin: 10px 0 0;
+  padding: 0;
+}
+
+.resource-prizes li {
+  align-items: center;
+  border-bottom: 1px solid var(--line);
+  display: flex;
+  justify-content: space-between;
+  min-height: 48px;
+  padding: 8px 0;
+}
+
+.resource-prizes li span {
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.resource-prizes li strong {
+  color: var(--primary);
+  font-size: 14px;
+}
+
+.resource-links {
+  display: grid;
+  gap: 8px;
+}
+
+.resource-links > .eyebrow {
+  margin-bottom: 2px;
+}
+
+.resource-link {
+  align-items: center;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  color: var(--ink);
+  display: flex;
+  font-size: 12px;
+  gap: 12px;
+  justify-content: space-between;
+  line-height: 1.5;
+  min-height: 48px;
+  padding: 10px 12px;
+  text-decoration: none;
+}
+
+.resource-link svg {
+  color: var(--muted);
+  flex: 0 0 auto;
+}
+
+.resource-link:hover {
+  border-color: var(--primary);
+  color: var(--primary);
+}
+
+@media (max-width: 560px) {
+  .detail-image.poster-detail-image {
+    padding: 8px;
+  }
+
+  .detail-image.poster-detail-image .poster-image {
+    max-height: 78vh;
+  }
+}

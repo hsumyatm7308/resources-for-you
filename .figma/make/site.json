@@ -1,0 +1,10 @@
+{
+  "description": "Offers a curated, searchable collection of workshops, hackathons, books, and design resources to help users easily find learning and creative materials.",
+  "robots": {
+    "index": false
+  },
+  "accessibility": {
+    "addBypassLinks": false,
+    "ignoreReducedMotion": false
+  }
+}

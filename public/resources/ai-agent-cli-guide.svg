@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 560" role="img" aria-labelledby="title description">
+  <title id="title">AI Agent CLI Guide</title>
+  <desc id="description">A Burmese guide to Claude Code, Codex, OpenCode, and Qwen CLI</desc>
+  <defs>
+    <linearGradient id="background" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#101c35" />
+      <stop offset="1" stop-color="#183c51" />
+    </linearGradient>
+    <pattern id="grid" width="36" height="36" patternUnits="userSpaceOnUse">
+      <path d="M36 0H0V36" fill="none" stroke="#93c5fd" stroke-opacity=".12" />
+    </pattern>
+  </defs>
+  <rect width="900" height="560" fill="url(#background)" />
+  <rect width="900" height="560" fill="url(#grid)" />
+  <path d="M635 128h90v62h90M680 190v62h132M725 252h87" fill="none" stroke="#67e8f9" stroke-opacity=".42" stroke-width="2" />
+  <circle cx="635" cy="128" r="10" fill="#67e8f9" />
+  <circle cx="725" cy="128" r="10" fill="#67e8f9" />
+  <circle cx="815" cy="190" r="10" fill="#67e8f9" />
+  <circle cx="680" cy="252" r="10" fill="#67e8f9" />
+  <circle cx="812" cy="252" r="10" fill="#67e8f9" />
+  <rect x="52" y="54" width="162" height="34" rx="17" fill="#67e8f9" fill-opacity=".12" stroke="#67e8f9" stroke-opacity=".45" />
+  <text x="133" y="76" fill="#cffafe" font-family="Arial, sans-serif" font-size="13" font-weight="700" letter-spacing="2" text-anchor="middle">BURMESE GUIDE</text>
+  <text x="52" y="192" fill="#fff" font-family="Arial, sans-serif" font-size="76" font-weight="800" letter-spacing="-3">AI AGENT</text>
+  <text x="52" y="278" fill="#fff" font-family="Arial, sans-serif" font-size="76" font-weight="800" letter-spacing="-3">CLI GUIDE</text>
+  <text x="56" y="329" fill="#a5f3fc" font-family="Arial, sans-serif" font-size="17">CLAUDE CODE · CODEX · OPENCODE · QWEN</text>
+  <rect x="56" y="373" width="390" height="52" rx="8" fill="#0b1427" stroke="#94a3b8" stroke-opacity=".45" />
+  <circle cx="79" cy="399" r="4" fill="#34d399" />
+  <text x="96" y="405" fill="#dbeafe" font-family="monospace" font-size="16">$ agents collaborate --review</text>
+  <path d="M56 470h788" stroke="#fff" stroke-opacity=".2" />
+  <text x="56" y="510" fill="#fff" font-family="Arial, sans-serif" font-size="18" font-weight="700">SATURNGOD</text>
+  <text x="844" y="510" fill="#d1d5db" font-family="Arial, sans-serif" font-size="16" text-anchor="end">OPEN SOURCE GUIDE · GITHUB</text>
+</svg>

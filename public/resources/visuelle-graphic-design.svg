@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 760" fill="none">
+  <rect width="1200" height="760" fill="#F0EEE7"/>
+  <rect x="718" y="0" width="482" height="760" fill="#D8ED54"/>
+  <path d="M120 114h960M120 647h960" stroke="#161616" stroke-width="2"/>
+  <text x="120" y="88" fill="#161616" font-family="Arial, Helvetica, sans-serif" font-size="22" letter-spacing="5">INDEPENDENT GRAPHIC DESIGN PUBLICATION</text>
+  <text x="110" y="355" fill="#161616" font-family="Arial, Helvetica, sans-serif" font-size="166" font-weight="700" letter-spacing="-13">VISUELLE</text>
+  <text x="122" y="418" fill="#161616" font-family="Arial, Helvetica, sans-serif" font-size="27" letter-spacing="4">GRAPHIC DESIGN &amp; EVERYTHING IN BETWEEN</text>
+  <circle cx="936" cy="378" r="159" fill="#F0EEE7" stroke="#161616" stroke-width="2"/>
+  <path d="M936 218c85 0 154 67 159 151H777c5-84 74-151 159-151Z" fill="#FF633D"/>
+  <path d="M936 538c-85 0-154-67-159-151h318c-5 84-74 151-159 151Z" fill="#3157D5"/>
+  <path d="M936 218v320M777 378h318" stroke="#161616" stroke-width="2"/>
+  <text x="120" y="706" fill="#161616" font-family="Arial, Helvetica, sans-serif" font-size="20" letter-spacing="4">IDENTITY · TYPE · EDITORIAL · IMAGE</text>
+</svg>
