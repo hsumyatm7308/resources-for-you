@@ -108,6 +108,7 @@ function figmaSiteConfiguration(config: FigmaSiteConfiguration): Plugin {
   const publicPaths = [
     '/',
     '/explore',
+    '/contact',
     ...categories.map(({ slug }) => `/explore/${slug}`),
     ...resources.map(({ id }) => `/resource/${id}`),
     ...collections.map(({ id }) => `/collections/${id}`),

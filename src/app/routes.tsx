@@ -373,6 +373,9 @@ function Layout() {
           >
             About
           </Link>
+          <NavLink to="/contact" onClick={() => setMenuOpen(false)}>
+            Contact
+          </NavLink>
         </nav>
         <div className="header-actions">
           <Link to="/explore" className="icon-button" aria-label="Search">
@@ -432,6 +435,7 @@ function Footer() {
             <Link to="/explore/design-references">Design references</Link>
             <Link to="/explore/graphic-design">Graphic design</Link>
             <Link to="/saved">Saved resources</Link>
+            <Link to="/contact">Contact</Link>
           </div>
         </div>
       </div>
@@ -1781,6 +1785,10 @@ export const router = createBrowserRouter([
       { path: "resource/:resourceId", Component: ResourceDetail },
       { path: "collections/:collectionId", Component: CollectionDetail },
       { path: "saved", Component: SavedPage },
+      {
+        path: "contact",
+        lazy: async () => ({ Component: (await import("./ContactPage")).default }),
+      },
       { path: "*", Component: NotFound },
     ],
   },
